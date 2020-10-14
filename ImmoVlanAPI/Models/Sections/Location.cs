@@ -20,7 +20,7 @@ namespace ImmoVlanAPI.Models {
         }
 
         public XElement ToXElement() {
-            return new XElement("location",
+            XElement el = new XElement("location",
                 new XElement("address",
                     new XElement("street", Address.Street),
                     new XElement("streetNumber", Address.StreetNumber),
@@ -30,26 +30,22 @@ namespace ImmoVlanAPI.Models {
                     new XElement("province", Address.Province),
                     new XElement("country", Address.Country)
                 ),
-                new XElement("coordinates",
-                    new XElement("latitude", GetLat(Coordinates)),
-                    new XElement("longitude", GetLong(Coordinates))
-                ),
                 new XElement("isAddressDisplayed", IsAddressDisplayed),
                 new XElement("environmentId", Environment)
             );
+
+            if (Coordinates != null) {
+                el.Element("location").Add(
+                    new XElement("coordinates", 
+                        new XElement("latitude", Coordinates.Latitude),
+                        new XElement("longitude", Coordinates.Longitude)
+                    )
+                );
+            }
+
+            return el;
         }
 
-        private decimal? GetLat(Coordinates co) {
-            if (co == null)
-                return null;
-            return co.Latitude;
-        }
-
-        private decimal? GetLong(Coordinates co) {
-            if (co == null)
-                return null;
-            return co.Longitude;
-        }
     }
 
     public class Address {

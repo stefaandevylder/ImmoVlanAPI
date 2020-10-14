@@ -17,10 +17,11 @@ namespace ImmoVlanAPI.Models {
 
         //Non-required Items
         public GeneralInformation GeneralInformation { get; set; }
+        public OutdoorDescription OutdoorDescription { get; set; }
 
         public Property(string propertyProId, string propertySoftwareId, CommercialStatus status,
             Classification classification, Location location, Description description, FinancialDetails financial,
-            GeneralInformation general = null) {
+            GeneralInformation general = null, OutdoorDescription outdoor = null) {
             PropertyProId = propertyProId;
             PropertySoftwareId = propertySoftwareId;
 
@@ -30,10 +31,11 @@ namespace ImmoVlanAPI.Models {
             Description = description;
             FinancialDetails = financial;
 
-            if (general == null)
-                general = new GeneralInformation();
+            if (general == null) general = new GeneralInformation();
+            if (outdoor == null) outdoor = new OutdoorDescription();
 
             GeneralInformation = general;
+            OutdoorDescription = outdoor;
         }
 
         public XElement ToXElement() {

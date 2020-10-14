@@ -46,7 +46,7 @@ namespace ImmoVlanAPI {
          */
         public async Task<HttpResponseMessage> PublishProperty(Property property) {
             XDocument xml = ToBaseXML();
-            xml.Root.Element("action").Add(new XElement("publish", property.ToXElement()));
+            xml.Element("action").Add(new XElement("publish", property.ToXElement()));
 
             return await PostXML(xml);
         }

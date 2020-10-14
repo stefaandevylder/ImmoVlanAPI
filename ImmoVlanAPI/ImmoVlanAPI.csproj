@@ -8,6 +8,25 @@
     <RepositoryUrl>https://github.com/stefaandevylder/ImmoVlanAPI</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>ImmoVlanAPI is a library that acts as a wrapper to send post requests to ImmoVlan.</Description>
+    <Version>1.0.2</Version>
+    <Copyright></Copyright>
+    <PackageLicenseExpression>https://licenses.nuget.org/MIT</PackageLicenseExpression>
+    <PackageIcon>Icon.png</PackageIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\Icon.png" Link="Assets\Icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="Assets\Icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\" />
+  </ItemGroup>
 
 </Project>
