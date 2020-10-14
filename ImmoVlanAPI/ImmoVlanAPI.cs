@@ -1,5 +1,10 @@
 ﻿using ImmoVlanAPI.Models;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace ImmoVlanAPI {
@@ -13,6 +18,8 @@ namespace ImmoVlanAPI {
                     "http://api.immo.vlan.be/upload";
             }
         }
+
+        public HttpClient Http = new HttpClient();
 
         public string BusinessFeedbackEmail { get; private set; }
         public string TechnicalFeedbackEmail { get; private set; }
@@ -37,9 +44,11 @@ namespace ImmoVlanAPI {
          * Publish a new property. If the property
          * does exist already, it gets updated.
          */
-        public void PublishProperty(Property property) {
+        public async Task PublishProperty(Property property) {
             XDocument xml = ToBaseXML();
             xml.Root.Element("action").Add(new XElement("publish", property.ToXElement()));
+
+            await PostXML(xml);
         }
 
         /**
@@ -60,6 +69,35 @@ namespace ImmoVlanAPI {
             );
             
             return doc;
+        }
+
+        /**
+         * Send a post request to the ImmoVlan
+         * servers so the XML file gets posted.
+         */
+        public async Task PostXML(XDocument doc) {
+            var content = new MultipartFormDataContent();
+
+            var values = new[] {
+                new KeyValuePair<string, string>("businessFeedbackEmail", BusinessFeedbackEmail),
+                new KeyValuePair<string, string>("technicalFeedbackEmail", TechnicalFeedbackEmail),
+            };
+
+            foreach (var keyValuePair in values) {
+                content.Add(new StringContent(keyValuePair.Value), keyValuePair.Key);
+            }
+
+            MemoryStream ms = new MemoryStream();
+            doc.Save(ms);
+
+            var fileContent = new ByteArrayContent(ms.ToArray());
+            fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("file") {
+                FileName = "Input.xml"
+            };
+
+            content.Add(fileContent);
+
+            await Http.PostAsync(URL, content);
         }
     }
 }
