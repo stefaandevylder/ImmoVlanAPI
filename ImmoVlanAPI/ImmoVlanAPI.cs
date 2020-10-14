@@ -44,11 +44,11 @@ namespace ImmoVlanAPI {
          * Publish a new property. If the property
          * does exist already, it gets updated.
          */
-        public async Task PublishProperty(Property property) {
+        public async Task<HttpResponseMessage> PublishProperty(Property property) {
             XDocument xml = ToBaseXML();
             xml.Root.Element("action").Add(new XElement("publish", property.ToXElement()));
 
-            await PostXML(xml);
+            return await PostXML(xml);
         }
 
         /**
@@ -75,7 +75,7 @@ namespace ImmoVlanAPI {
          * Send a post request to the ImmoVlan
          * servers so the XML file gets posted.
          */
-        public async Task PostXML(XDocument doc) {
+        public async Task<HttpResponseMessage> PostXML(XDocument doc) {
             var content = new MultipartFormDataContent();
 
             var values = new[] {
@@ -94,10 +94,9 @@ namespace ImmoVlanAPI {
             fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("file") {
                 FileName = "Input.xml"
             };
-
             content.Add(fileContent);
 
-            await Http.PostAsync(URL, content);
+            return await Http.PostAsync(URL, content);
         }
     }
 }
