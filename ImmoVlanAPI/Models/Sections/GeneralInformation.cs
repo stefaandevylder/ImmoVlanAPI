@@ -10,7 +10,7 @@ namespace ImmoVlanAPI.Models {
         public string PropertyUrl { get; set; }
         public string ContactLanguage { get; set; }
         public string VisitingHours { get; set; }
-        public int ConditionId { get; set; }
+        public Condition Condition { get; set; }
         public Availability Availability { get; set; }
         public DateTime AvailableFrom { get; set; }
         public bool IsFirstOccupation { get; set; }
@@ -28,7 +28,7 @@ namespace ImmoVlanAPI.Models {
                 new XElement("propertyUrl", PropertyUrl),
                 new XElement("contactLanguage", ContactLanguage),
                 new XElement("visitingHours", VisitingHours),
-                new XElement("conditionId", ConditionId),
+                new XElement("conditionId", Condition),
                 new XElement("availabilityId", Availability),
                 new XElement("availableFrom", AvailableFrom.ToString().Replace(" ", "T")),
                 new XElement("isFirstOccupation", IsFirstOccupation),
@@ -40,6 +40,20 @@ namespace ImmoVlanAPI.Models {
                 new XElement("isListedBuilding", IsListedBuilding)
             );
         }
+
+    }
+
+    public enum Condition {
+
+        New = 0,
+        ExcellentCondition = 1,
+        Renovated = 2,
+        GoodCondition = 3,
+        ToRefresh = 4,
+        ToRestore = 5,
+        ToRenovate = 6,
+        ToDemolish = 7,
+        UnderConstruction = 8
 
     }
 

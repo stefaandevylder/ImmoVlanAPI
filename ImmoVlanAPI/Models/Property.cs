@@ -8,19 +8,29 @@ namespace ImmoVlanAPI.Models {
         public string PropertyProId { get; set; }
         public string PropertySoftwareId { get; set; }
 
-        //General Items
+        //Reqiured Items
         public CommercialStatus CommercialStatus { get; set; }
-
-        //Sections
         public Classification Classification { get; set; }
         public Location Location { get; set; }
-        public GeneralInformation GeneralInformation { get; set; }
         public Description Description { get; set; }
         public FinancialDetails FinancialDetails { get; set; }
 
-        public Property(string propertyProId, string propertySoftwareId) {
+        //Non-required Items
+        public GeneralInformation GeneralInformation { get; set; }
+
+        public Property(string propertyProId, string propertySoftwareId, CommercialStatus status,
+            Classification classification, Location location, Description description, FinancialDetails financial,
+            GeneralInformation general = null) {
             PropertyProId = propertyProId;
             PropertySoftwareId = propertySoftwareId;
+
+            CommercialStatus = status;
+            Classification = classification;
+            Location = location;
+            Description = description;
+            FinancialDetails = financial;
+
+            GeneralInformation = general;
         }
 
         public XElement ToXElement() {

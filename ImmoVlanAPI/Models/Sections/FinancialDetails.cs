@@ -19,6 +19,10 @@ namespace ImmoVlanAPI.Models {
         public float AgencyFee { get; set; }
         public decimal AnnualPercentageReturn { get; set; }
 
+        public FinancialDetails(decimal price) {
+            Price = price;
+        }
+
         public XElement ToXElement() {
             return new XElement("financialDetails",
                 new XElement("price", Price),

@@ -6,19 +6,28 @@ namespace ImmoVlanAPI {
 
     public class ImmoVlanAPI {
 
-        public static readonly string URL = "http://api.immo.vlan.be/upload";
-        public static readonly string URL_STAGING = "http://api.staging.immo.vlan.be/upload";
+        public string URL {
+            get {
+                return Staging ?
+                    "http://api.staging.immo.vlan.be/upload" :
+                    "http://api.immo.vlan.be/upload";
+            }
+        }
 
+        public string BusinessFeedbackEmail { get; private set; }
+        public string TechnicalFeedbackEmail { get; private set; }
         public int SoftwareId { get; private set; }
         public string ProCustomerId { get; private set; }
-
         public bool Staging { get; private set; }
 
-        public ImmoVlanAPI(int softwareId, string proCustomerId, bool staging = false) {
+        public ImmoVlanAPI(string businessFeedbackEmail, string technicalFeedbackEmail, 
+            int softwareId, string proCustomerId, bool staging = false) {
             if (softwareId < 1 || softwareId > 100) {
                 throw new ArgumentException("SoftwareId must be between 1 and 100.");
             }
 
+            BusinessFeedbackEmail = businessFeedbackEmail;
+            TechnicalFeedbackEmail = technicalFeedbackEmail;
             SoftwareId = softwareId;
             ProCustomerId = proCustomerId;
             Staging = staging;
