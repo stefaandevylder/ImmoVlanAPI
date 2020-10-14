@@ -30,6 +30,9 @@ namespace ImmoVlanAPI.Models {
             Description = description;
             FinancialDetails = financial;
 
+            if (general == null)
+                general = new GeneralInformation();
+
             GeneralInformation = general;
         }
 
@@ -40,9 +43,9 @@ namespace ImmoVlanAPI.Models {
                 new XAttribute("commercialStatus", CommercialStatus.ToString()),
                     Classification.ToXElement(),
                     Location.ToXElement(),
-                    GeneralInformation.ToXElement(),
                     Description.ToXElement(),
-                    FinancialDetails.ToXElement()
+                    FinancialDetails.ToXElement(),
+                    GeneralInformation.ToXElement()
             );
         }
 

@@ -31,14 +31,25 @@ namespace ImmoVlanAPI.Models {
                     new XElement("country", Address.Country)
                 ),
                 new XElement("coordinates",
-                    new XElement("latitude", Coordinates.Latitude),
-                    new XElement("longitude", Coordinates.Longitude)
+                    new XElement("latitude", GetLat(Coordinates)),
+                    new XElement("longitude", GetLong(Coordinates))
                 ),
                 new XElement("isAddressDisplayed", IsAddressDisplayed),
                 new XElement("environmentId", Environment)
             );
         }
 
+        private decimal? GetLat(Coordinates co) {
+            if (co == null)
+                return null;
+            return co.Latitude;
+        }
+
+        private decimal? GetLong(Coordinates co) {
+            if (co == null)
+                return null;
+            return co.Longitude;
+        }
     }
 
     public class Address {
