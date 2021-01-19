@@ -2,7 +2,7 @@
 
 namespace ImmoVlanAPI.Models {
 
-    public class Description {
+    public class Description : Section {
 
         public string Dutch { get; set; }
         public string French { get; set; }
@@ -14,7 +14,7 @@ namespace ImmoVlanAPI.Models {
             English = english;
         }
 
-        public XElement ToXElement() {
+        public override XElement ToXElement() {
             return new XElement("freeDescription",
                 new XElement("dutch", Dutch),
                 new XElement("french", French),

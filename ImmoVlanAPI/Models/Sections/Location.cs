@@ -2,7 +2,7 @@
 
 namespace ImmoVlanAPI.Models {
 
-    public class Location {
+    public class Location : Section {
 
         public Address Address { get; set; }
         public Coordinates Coordinates { get; set; }
@@ -19,7 +19,7 @@ namespace ImmoVlanAPI.Models {
             Environment = environment;
         }
 
-        public XElement ToXElement() {
+        public override XElement ToXElement() {
             XElement el = new XElement("location",
                 new XElement("address",
                     new XElement("street", Address.Street),

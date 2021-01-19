@@ -2,7 +2,7 @@
 
 namespace ImmoVlanAPI.Models {
 
-    public class FinancialDetails {
+    public class FinancialDetails : Section {
 
         public decimal Price { get; set; }
         public decimal MaxPrice { get; set; }
@@ -23,7 +23,7 @@ namespace ImmoVlanAPI.Models {
             Price = price;
         }
 
-        public XElement ToXElement() {
+        public override XElement ToXElement() {
             return new XElement("financialDetails",
                 new XElement("price", Price),
                 new XElement("maxPrice", MaxPrice),

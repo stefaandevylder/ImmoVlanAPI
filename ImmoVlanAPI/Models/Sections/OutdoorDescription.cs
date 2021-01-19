@@ -2,7 +2,7 @@
 
 namespace ImmoVlanAPI.Models {
 
-    public class OutdoorDescription {
+    public class OutdoorDescription : Section {
 
         public int NrOfFrontages { get; set; }
         public int FrontageWidth { get; set; }
@@ -17,7 +17,7 @@ namespace ImmoVlanAPI.Models {
         public int TerraceSurface { get; set; }
         public int CourtyardSurface { get; set; }
 
-        public XElement ToXElement() {
+        public override XElement ToXElement() {
             XElement el = new XElement("outdoorDescription",
                 new XElement("nrOfFrontages", NrOfFrontages),
                 new XElement("frontageWidth", FrontageWidth),

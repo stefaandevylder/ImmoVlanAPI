@@ -3,7 +3,7 @@ using System.Xml.Linq;
 
 namespace ImmoVlanAPI.Models {
 
-    public class GeneralInformation {
+    public class GeneralInformation : Section {
 
         public string ContactEmail { get; set; }
         public string ContactPhone { get; set; }
@@ -21,7 +21,7 @@ namespace ImmoVlanAPI.Models {
         public bool IsWoodConstruction { get; set; }
         public bool IsListedBuilding { get; set; }
 
-        public XElement ToXElement() {
+        public override XElement ToXElement() {
             return new XElement("generalInformation",
                 new XElement("contactEmail", ContactEmail),
                 new XElement("contactPhone", ContactPhone),

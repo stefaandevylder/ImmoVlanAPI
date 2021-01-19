@@ -19,7 +19,7 @@ namespace ImmoVlanAPI {
             }
         }
 
-        public HttpClient Http = new HttpClient();
+        private HttpClient _http = new HttpClient();
 
         public string BusinessFeedbackEmail { get; private set; }
         public string TechnicalFeedbackEmail { get; private set; }
@@ -27,6 +27,16 @@ namespace ImmoVlanAPI {
         public string ProCustomerId { get; private set; }
         public bool Staging { get; private set; }
 
+        /// <summary>
+        /// Creates a client of the ImmoVlan API.
+        /// You need to use this to send over the property
+        /// to the API servers.
+        /// </summary>
+        /// <param name="businessFeedbackEmail">The Email for business feedback</param>
+        /// <param name="technicalFeedbackEmail">The Email for technical things such as errors</param>
+        /// <param name="softwareId">A custom software ID</param>
+        /// <param name="proCustomerId">A professional customer ID (ImmoVlan creates these)</param>
+        /// <param name="staging">Enable this if you need to stage</param>
         public ImmoVlanAPI(string businessFeedbackEmail, string technicalFeedbackEmail, 
             int softwareId, string proCustomerId, bool staging = false) {
             if (softwareId < 1 || softwareId > 100) {
@@ -40,10 +50,12 @@ namespace ImmoVlanAPI {
             Staging = staging;
         }
 
-        /**
-         * Publish a new property. If the property
-         * does exist already, it gets updated.
-         */
+        /// <summary>
+        /// Publish a new property. If the property
+        /// does exist already, it gets updated.
+        /// </summary>
+        /// <param name="property">The property object</param>
+        /// <returns>The HTTP response of our POST request</returns>
         public async Task<HttpResponseMessage> PublishProperty(Property property) {
             XDocument xml = ToBaseXML();
             xml.Element("action").Add(new XElement("publish", property.ToXElement()));
@@ -51,12 +63,13 @@ namespace ImmoVlanAPI {
             return await PostXML(xml);
         }
 
-        /**
-         * Creates an XML document especially designed
-         * for the ImmoVlan API. Information in this XML
-         * only contains the required options.
-         * The required items can be found on: http://api.immo.vlan.be/Files/XmlTransferXsd
-         */
+        /// <summary>
+        /// Creates an XML document especially designed
+        /// for the ImmoVlan API.Information in this XML
+        /// only contains the required options.
+        /// The required items can be found on: http://api.immo.vlan.be/Files/XmlTransferXsd
+        /// </summary>
+        /// <returns>An XDocument wich can be converted to an XML file</returns>
         private XDocument ToBaseXML() {
             XDocument doc = new XDocument(
                 new XElement("request",
@@ -71,11 +84,13 @@ namespace ImmoVlanAPI {
             return doc;
         }
 
-        /**
-         * Send a post request to the ImmoVlan
-         * servers so the XML file gets posted.
-         */
-        public async Task<HttpResponseMessage> PostXML(XDocument doc) {
+        /// <summary>
+        /// Send a post request to the ImmoVlan
+        /// servers so the XML file gets posted.
+        /// </summary>
+        /// <param name="doc">The fial XML document</param>
+        /// <returns>The HTTP response of our POST request</returns>
+        private async Task<HttpResponseMessage> PostXML(XDocument doc) {
             var content = new MultipartFormDataContent();
 
             var values = new[] {
@@ -96,7 +111,7 @@ namespace ImmoVlanAPI {
             };
             content.Add(fileContent);
 
-            return await Http.PostAsync(URL, content);
+            return await _http.PostAsync(URL, content);
         }
     }
 }

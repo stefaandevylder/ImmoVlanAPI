@@ -7,7 +7,7 @@ namespace ImmoVlanAPI.Tests {
 
         [Fact]
         public void CreateClient() {
-            new ImmoVlanAPI("business@mail.com", "technical@mail.com", 1, "XXXX");
+            new ImmoVlanAPI("business@mail.com", "technical@mail.com", 1, "XXXX", true);
         }
 
         [Fact]

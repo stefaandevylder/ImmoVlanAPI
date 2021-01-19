@@ -2,7 +2,7 @@
 
 namespace ImmoVlanAPI.Models {
 
-    public class IndoorDescription {
+    public class IndoorDescription : Section {
 
         public decimal LivableSurface { get; set; }
         public bool IsFurnished { get; set; }
@@ -17,7 +17,7 @@ namespace ImmoVlanAPI.Models {
         public Room[] Rooms { get; set; }
         public Connections Connections { get; set; }
 
-        public XElement ToXElement() {
+        public override XElement ToXElement() {
             XElement el = new XElement("indoorDescription",
                 new XElement("livableSurface", LivableSurface),
                 new XElement("isFurnished", IsFurnished),

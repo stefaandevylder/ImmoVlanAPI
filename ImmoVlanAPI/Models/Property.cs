@@ -2,20 +2,20 @@
 
 namespace ImmoVlanAPI.Models {
 
-    public class Property {
+    public class Property : Section {
 
         //Identification
         public string PropertyProId { get; set; }
         public string PropertySoftwareId { get; set; }
 
-        //Reqiured Items
+        //Reqiured Items & Sections
         public CommercialStatus CommercialStatus { get; set; }
         public Classification Classification { get; set; }
         public Location Location { get; set; }
         public Description Description { get; set; }
         public FinancialDetails FinancialDetails { get; set; }
 
-        //Non-required Items
+        //Non-required Sections
         public GeneralInformation GeneralInformation { get; set; }
         public OutdoorDescription OutdoorDescription { get; set; }
         public IndoorDescription IndoorDescription { get; set; }
@@ -32,16 +32,12 @@ namespace ImmoVlanAPI.Models {
             Description = description;
             FinancialDetails = financial;
 
-            if (general == null) general = new GeneralInformation();
-            if (outdoor == null) outdoor = new OutdoorDescription();
-            if (indoor == null) indoor = new IndoorDescription();
-
-            GeneralInformation = general;
-            OutdoorDescription = outdoor;
-            IndoorDescription = indoor;
+            GeneralInformation = general ?? new GeneralInformation();
+            OutdoorDescription = outdoor ?? new OutdoorDescription();
+            IndoorDescription = indoor ?? new IndoorDescription();
         }
 
-        public XElement ToXElement() {
+        public override XElement ToXElement() {
             return new XElement("property",
                 new XAttribute("propertyProId", PropertyProId),
                 new XAttribute("propertySoftwareId", PropertySoftwareId),
