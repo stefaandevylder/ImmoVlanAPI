@@ -19,10 +19,12 @@ namespace ImmoVlanAPI.Models {
         public GeneralInformation GeneralInformation { get; set; }
         public OutdoorDescription OutdoorDescription { get; set; }
         public IndoorDescription IndoorDescription { get; set; }
+        public Attachments Attachments { get; set; }
 
         public Property(string propertyProId, string propertySoftwareId, CommercialStatus status,
             Classification classification, Location location, Description description, FinancialDetails financial,
-            GeneralInformation general = null, OutdoorDescription outdoor = null, IndoorDescription indoor = null) {
+            GeneralInformation general = null, OutdoorDescription outdoor = null, IndoorDescription indoor = null,
+            Attachments attachments = null) {
             PropertyProId = propertyProId;
             PropertySoftwareId = propertySoftwareId;
 
@@ -32,22 +34,29 @@ namespace ImmoVlanAPI.Models {
             Description = description;
             FinancialDetails = financial;
 
-            GeneralInformation = general ?? new GeneralInformation();
-            OutdoorDescription = outdoor ?? new OutdoorDescription();
-            IndoorDescription = indoor ?? new IndoorDescription();
+            GeneralInformation = general;
+            OutdoorDescription = outdoor;
+            IndoorDescription = indoor;
+            Attachments = attachments;
         }
 
         public override XElement ToXElement() {
-            return new XElement("property",
+            XElement el = new XElement("property",
                 new XAttribute("propertyProId", PropertyProId),
                 new XAttribute("propertySoftwareId", PropertySoftwareId),
                 new XAttribute("commercialStatus", CommercialStatus.ToString()),
                     Classification.ToXElement(),
                     Location.ToXElement(),
                     Description.ToXElement(),
-                    FinancialDetails.ToXElement(),
-                    GeneralInformation.ToXElement()
+                    FinancialDetails.ToXElement()
             );
+
+            if (GeneralInformation != null) el.Add(GeneralInformation.ToXElement());
+            if (OutdoorDescription != null) el.Add(OutdoorDescription.ToXElement());
+            if (IndoorDescription != null) el.Add(IndoorDescription.ToXElement());
+            if (Attachments != null) el.Add(Attachments.ToXElement());
+
+            return el;
         }
 
     }

@@ -31,25 +31,23 @@ namespace ImmoVlanAPI.Models {
                 new XElement("blindsTypeId", BlindsType)
             );
 
-            if (Rooms != null) {
-                if (Rooms.Length > 0) {
-                    el.Element("indoorDescription").Add(
-                        new XElement("rooms",
-                        new XAttribute("quantity", Rooms.Length))
-                    );
+            if (Rooms != null && Rooms.Length > 0) {
+                el.Add(
+                    new XElement("rooms",
+                    new XAttribute("quantity", Rooms.Length))
+                );
 
-                    foreach (Room room in Rooms) {
-                        el.Element("rooms").Add(
-                            new XElement(room.RoomType.ToString(),
-                            new XAttribute("quantity", room.Quantity),
-                                new XElement("surface", room.Surface))
-                        );
-                    }
+                foreach (Room room in Rooms) {
+                    el.Element("rooms").Add(
+                        new XElement(room.RoomType.ToString(),
+                        new XAttribute("quantity", room.Quantity),
+                            new XElement("surface", room.Surface))
+                    );
                 }
             }
 
             if (Connections != null) {
-                el.Element("indoorDescription").Add(
+                el.Add(
                     new XElement("connections",
                         new XElement("hasSatelliteTv", Connections.HasSatelliteTv),
                         new XElement("hasCableTv", Connections.HasCableTv),

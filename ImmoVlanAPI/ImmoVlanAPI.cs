@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace ImmoVlanAPI {
 
     public class ImmoVlanAPI {
 
-        public string URL {
+        private string URL {
             get {
                 return Staging ?
                     "http://api.staging.immo.vlan.be/upload" :
@@ -19,13 +20,13 @@ namespace ImmoVlanAPI {
             }
         }
 
-        private HttpClient _http = new HttpClient();
+        private HttpClient Http = new HttpClient();
 
-        public string BusinessFeedbackEmail { get; private set; }
-        public string TechnicalFeedbackEmail { get; private set; }
-        public int SoftwareId { get; private set; }
-        public string ProCustomerId { get; private set; }
-        public bool Staging { get; private set; }
+        private string BusinessFeedbackEmail { get; set; }
+        private string TechnicalFeedbackEmail { get; set; }
+        private int SoftwareId { get; set; }
+        private string ProCustomerId { get; set; }
+        private bool Staging { get; set; }
 
         /// <summary>
         /// Creates a client of the ImmoVlan API.
@@ -57,10 +58,21 @@ namespace ImmoVlanAPI {
         /// <param name="property">The property object</param>
         /// <returns>The HTTP response of our POST request</returns>
         public async Task<HttpResponseMessage> PublishProperty(Property property) {
-            XDocument xml = ToBaseXML();
-            xml.Element("action").Add(new XElement("publish", property.ToXElement()));
+            return await PostXML(GetXML(property));
+        }
 
-            return await PostXML(xml);
+        /// <summary>
+        /// Creates the full XML file to upload to the API.
+        /// </summary>
+        /// <param name="property">The property object</param>
+        /// <returns>A complete XML file</returns>
+        public XDocument GetXML(Property property) {
+            XDocument xml = ToBaseXML();
+
+            xml.Element("request").Element("action").Add(new XElement("publish", property.ToXElement()));
+            xml.Descendants().Where(a => a.IsEmpty || String.IsNullOrWhiteSpace(a.Value)).Remove();
+
+            return xml;
         }
 
         /// <summary>
@@ -80,7 +92,7 @@ namespace ImmoVlanAPI {
                     new XAttribute("hashValidation", Guid.NewGuid().ToString("N")))
                 )
             );
-            
+
             return doc;
         }
 
@@ -111,7 +123,7 @@ namespace ImmoVlanAPI {
             };
             content.Add(fileContent);
 
-            return await _http.PostAsync(URL, content);
+            return await Http.PostAsync(URL, content);
         }
     }
 }
