@@ -5,26 +5,25 @@ namespace ImmoVlanAPI.Models {
     public class Property : Section {
 
         //Identification
-        public string PropertyProId { get; set; }
-        public string PropertySoftwareId { get; set; }
+        private string PropertyProId { get; set; }
+        private string PropertySoftwareId { get; set; }
 
-        //Reqiured Items & Sections
-        public CommercialStatus CommercialStatus { get; set; }
-        public Classification Classification { get; set; }
-        public Location Location { get; set; }
-        public Description Description { get; set; }
-        public FinancialDetails FinancialDetails { get; set; }
+        //Reqiured Private Items & Sections
+        private CommercialStatus CommercialStatus { get; set; }
+        private Classification Classification { get; set; }
+        private Location Location { get; set; }
+        private Description Description { get; set; }
+        private FinancialDetails FinancialDetails { get; set; }
 
-        //Non-required Sections
+        //Non-required Public Sections
         public GeneralInformation GeneralInformation { get; set; }
         public OutdoorDescription OutdoorDescription { get; set; }
         public IndoorDescription IndoorDescription { get; set; }
+        public Certificates Certificates { get; set; }
         public Attachments Attachments { get; set; }
 
         public Property(string propertyProId, string propertySoftwareId, CommercialStatus status,
-            Classification classification, Location location, Description description, FinancialDetails financial,
-            GeneralInformation general = null, OutdoorDescription outdoor = null, IndoorDescription indoor = null,
-            Attachments attachments = null) {
+            Classification classification, Location location, Description description, FinancialDetails financial) {
             PropertyProId = propertyProId;
             PropertySoftwareId = propertySoftwareId;
 
@@ -33,11 +32,6 @@ namespace ImmoVlanAPI.Models {
             Location = location;
             Description = description;
             FinancialDetails = financial;
-
-            GeneralInformation = general;
-            OutdoorDescription = outdoor;
-            IndoorDescription = indoor;
-            Attachments = attachments;
         }
 
         public override XElement ToXElement() {
@@ -54,6 +48,7 @@ namespace ImmoVlanAPI.Models {
             if (GeneralInformation != null) el.Add(GeneralInformation.ToXElement());
             if (OutdoorDescription != null) el.Add(OutdoorDescription.ToXElement());
             if (IndoorDescription != null) el.Add(IndoorDescription.ToXElement());
+            if (Certificates != null) el.Add(Certificates.ToXElement());
             if (Attachments != null) el.Add(Attachments.ToXElement());
 
             return el;
