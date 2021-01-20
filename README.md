@@ -44,6 +44,11 @@ Property prop = new Property("123", "123", CommercialStatus.ONLINE,
             new Room(RoomType.Attic, 1, 50),
             new Room(RoomType.Bathroom, 1, 50),
         }
+    },
+    new Attachments() {
+        Pictures = new Picture[] { new Picture(1, "content") },
+        Videos = new Video[] { new Video(1, "link") },
+        Documents = new Document[] { new Document("name", 1, "content") }
     }
 );
 ```
