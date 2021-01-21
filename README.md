@@ -4,22 +4,38 @@
 
 This is a wrapper for the immo.vlan.be API for ASP.NET Core. There is a nice documentation guide wich you can find on the ImmoVlan website. Read this before using this wrapper.
 
-# Contributions
+## Contributions
 
 Have you spotted a bug or want to add a missing feature? All pull requests are welcome! Please provide a description of the bug or feature you have fixed/added. Make sure to target the latest development branch.
 
 
-# 1. Installation
+## 1. Installation
 
-The easiest way to install is through the [NuGetpackage](https://www.nuget.org/packages/ImmoVlanAPI/).
+The easiest way to install is through the [NuGet](https://www.nuget.org/packages/ImmoVlanAPI/) package.
 ```
 PM> Install-Package ImmoVlanAPI
 ```
 
-# 2. Documentation
+## 2. Library limitations
+
+The library has currently some limitations, I've created around 50% of all options. Following options have been added and are fully supported:
+
+1. Classification
+2. Location
+3. Description
+4. Financial Details
+5. General Information (Optional)
+6. Outdoor Description (Optional)
+7. Indoor Description (Optional)
+8. Certificates (Optional)
+9. Attachments (Optional)
+
+## 3. Documentation
+
 The documentation will be written soon.
 
-## Basic Example
+## Examples
+### Basic Example
 ```cs
 ImmoVlanAPI client = ImmoVlanAPI("business@mail.com", "technical@mail.com", 1, "XXXX");
 
@@ -34,7 +50,7 @@ var publishResult = await client.PublishProperty(property).Result;
 ```
 This only contains the most basic options, there are a lot more, the documentation will get updated soon.
 
-## Semi-Advanced Example
+### Semi-Advanced Example
 ```cs
 Property prop = new Property("123", "123", CommercialStatus.ONLINE,
     new Classification(TransactionType.SALE, PropertyType.BusinessSurface, true),
