@@ -9,14 +9,14 @@ namespace ImmoVlanAPI.Tests {
 
         private readonly ITestOutputHelper _output;
 
-        private readonly ImmoVlanAPI _api;
+        private readonly ImmoVlanClient _api;
         private readonly Property _simpleProperty;
         private readonly Property _advancedProperty;
 
         public SimpleTest(ITestOutputHelper output) {
             _output = output;
 
-            _api = new ImmoVlanAPI("business@mail.com", "technical@mail.com", 1, "XXXX", true);
+            _api = new ImmoVlanClient("business@mail.com", "technical@mail.com", 1, "XXXX", true);
 
             _simpleProperty = new Property("123", "123", CommercialStatus.ONLINE,
                 new Classification(TransactionType.SALE, PropertyType.BusinessSurface),

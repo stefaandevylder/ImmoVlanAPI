@@ -10,7 +10,7 @@ using System.Xml.Linq;
 
 namespace ImmoVlanAPI {
 
-    public class ImmoVlanAPI {
+    public class ImmoVlanClient {
 
         private string URL {
             get {
@@ -38,7 +38,7 @@ namespace ImmoVlanAPI {
         /// <param name="softwareId">A custom software ID</param>
         /// <param name="proCustomerId">A professional customer ID (ImmoVlan creates these)</param>
         /// <param name="staging">Enable this if you need to stage</param>
-        public ImmoVlanAPI(string businessFeedbackEmail, string technicalFeedbackEmail, 
+        public ImmoVlanClient(string businessFeedbackEmail, string technicalFeedbackEmail, 
             int softwareId, string proCustomerId, bool staging = false) {
             if (softwareId < 1 || softwareId > 100) {
                 throw new ArgumentException("SoftwareId must be between 1 and 100.");

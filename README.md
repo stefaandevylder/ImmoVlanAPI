@@ -37,7 +37,7 @@ The documentation will be written soon.
 ## Examples
 ### Basic Example
 ```cs
-ImmoVlanAPI client = ImmoVlanAPI("business@mail.com", "technical@mail.com", 1, "XXXX");
+ImmoVlanClient client = new ImmoVlanClient("business@mail.com", "technical@mail.com", 1, "XXXX");
 
 Property property = new Property("123", "123", CommercialStatus.ONLINE,
     new Classification(TransactionType.SALE, PropertyType.BusinessSurface),
