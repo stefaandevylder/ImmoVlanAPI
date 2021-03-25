@@ -16,8 +16,8 @@ namespace ImmoVlanAPI.Models {
 
         public override XElement ToXElement() {
             return new XElement("freeDescription",
-                new XElement("dutch", Dutch),
                 new XElement("french", French),
+                new XElement("dutch", Dutch),
                 new XElement("english", English)
             );
         }

@@ -1,10 +1,10 @@
 ﻿using ImmoVlanAPI.Models;
+using RestSharp;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -15,17 +15,16 @@ namespace ImmoVlanAPI {
         private string URL {
             get {
                 return Staging ?
-                    "http://api.staging.immo.vlan.be/upload" :
-                    "http://api.immo.vlan.be/upload";
+                    "http://api.staging.immo.vlan.be" :
+                    "http://api.immo.vlan.be";
             }
         }
-
-        private HttpClient Http = new HttpClient();
 
         private string BusinessFeedbackEmail { get; set; }
         private string TechnicalFeedbackEmail { get; set; }
         private int SoftwareId { get; set; }
         private string ProCustomerId { get; set; }
+        private string SoftwarePassword { get; set; }
         private bool Staging { get; set; }
 
         /// <summary>
@@ -38,16 +37,13 @@ namespace ImmoVlanAPI {
         /// <param name="softwareId">A custom software ID</param>
         /// <param name="proCustomerId">A professional customer ID (ImmoVlan creates these)</param>
         /// <param name="staging">Enable this if you need to stage</param>
-        public ImmoVlanClient(string businessFeedbackEmail, string technicalFeedbackEmail, 
-            int softwareId, string proCustomerId, bool staging = false) {
-            if (softwareId < 1 || softwareId > 100) {
-                throw new ArgumentException("SoftwareId must be between 1 and 100.");
-            }
-
+        public ImmoVlanClient(string businessFeedbackEmail, string technicalFeedbackEmail,
+            int softwareId, string proCustomerId, string softwarePassword, bool staging = false) {
             BusinessFeedbackEmail = businessFeedbackEmail;
             TechnicalFeedbackEmail = technicalFeedbackEmail;
             SoftwareId = softwareId;
             ProCustomerId = proCustomerId;
+            SoftwarePassword = softwarePassword;
             Staging = staging;
         }
 
@@ -57,7 +53,7 @@ namespace ImmoVlanAPI {
         /// </summary>
         /// <param name="property">The property object</param>
         /// <returns>The HTTP response of our POST request</returns>
-        public async Task<HttpResponseMessage> PublishProperty(Property property) {
+        public async Task<IRestResponse> PublishProperty(Property property) {
             return await PostXML(GetXML(property));
         }
 
@@ -83,13 +79,15 @@ namespace ImmoVlanAPI {
         /// </summary>
         /// <returns>An XDocument wich can be converted to an XML file</returns>
         private XDocument ToBaseXML() {
+            DateTime timeStamp = DateTime.Now;
+
             XDocument doc = new XDocument(
                 new XElement("request",
-                new XAttribute("timestamp", DateTime.Now.ToString().Replace(" ", "T")),
+                new XAttribute("timestamp", timeStamp.ToString("s")),
                 new XAttribute("softwareId", $"{SoftwareId}"),
                     new XElement("action",
                     new XAttribute("proCustomerId", ProCustomerId),
-                    new XAttribute("hashValidation", Guid.NewGuid().ToString("N")))
+                    new XAttribute("hashValidation", HashValidation(timeStamp)))
                 )
             );
 
@@ -102,28 +100,40 @@ namespace ImmoVlanAPI {
         /// </summary>
         /// <param name="doc">The fial XML document</param>
         /// <returns>The HTTP response of our POST request</returns>
-        private async Task<HttpResponseMessage> PostXML(XDocument doc) {
-            var content = new MultipartFormDataContent();
+        private async Task<IRestResponse> PostXML(XDocument doc) {
+            var client = new RestClient();
+            client.BaseUrl = new Uri(URL);
 
-            var values = new[] {
-                new KeyValuePair<string, string>("businessFeedbackEmail", BusinessFeedbackEmail),
-                new KeyValuePair<string, string>("technicalFeedbackEmail", TechnicalFeedbackEmail),
-            };
+            var request = new RestRequest("upload", Method.POST);
+            request.AlwaysMultipartFormData = true;
 
-            foreach (var keyValuePair in values) {
-                content.Add(new StringContent(keyValuePair.Value), keyValuePair.Key);
-            }
+            request.AddParameter("businessFeedbackEmail", BusinessFeedbackEmail, ParameterType.UrlSegment);
+            request.AddParameter("technicalFeedbackEmail", TechnicalFeedbackEmail, ParameterType.UrlSegment);
 
             MemoryStream ms = new MemoryStream();
             doc.Save(ms);
 
-            var fileContent = new ByteArrayContent(ms.ToArray());
-            fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("file") {
-                FileName = "Input.xml"
-            };
-            content.Add(fileContent);
+            request.AddFile("file", ms.ToArray(), "input.xml");
 
-            return await Http.PostAsync(URL, content);
+            return await client.ExecuteAsync(request);
+        }
+
+        /// <summary>
+        /// A SHA1 hash of the following values concatenated using a
+        /// pipe: Timestamp, ProCustomerId, SoftwareId, Software password.
+        /// 
+        /// Example: 2014-08-26T00:00:00|00245259|38|g1
+        /// 1b1e1381bf6df7895a2838dbf4cbfcd406852b13
+        /// </summary>
+        /// <returns></returns>
+        private string HashValidation(DateTime timeStamp) {
+            string rawData = timeStamp.ToString("s") + "|" + ProCustomerId + "|" + SoftwareId + "|" + SoftwarePassword;
+
+            byte[] buffer = Encoding.UTF8.GetBytes(rawData);
+            SHA1CryptoServiceProvider cryptoTransformSha1 = new SHA1CryptoServiceProvider();
+            string hash = BitConverter.ToString(cryptoTransformSha1.ComputeHash(buffer)).Replace("-", "");
+
+            return hash;
         }
     }
 }

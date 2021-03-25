@@ -4,24 +4,24 @@ namespace ImmoVlanAPI.Models {
 
     public class OutdoorDescription : Section {
 
-        public int NrOfFrontages { get; set; }
-        public int FrontageWidth { get; set; }
-        public Orientation Orientation { get; set; }
-        public int NrOfFloors { get; set; }
-        public int FloorNumber { get; set; }
-        public int NrOfHousings { get; set; }
-        public int NrOfOutdoorParkings { get; set; }
-        public bool HasBalcony { get; set; }
+        public int? NrOfFrontages { get; set; }
+        public int? FrontageWidth { get; set; }
+        public Orientation? Orientation { get; set; }
+        public int? NrOfFloors { get; set; }
+        public int? FloorNumber { get; set; }
+        public int? NrOfHousings { get; set; }
+        public int? NrOfOutdoorParkings { get; set; }
+        public bool? HasBalcony { get; set; }
         public Ground Ground { get; set; }
-        public int GardenSurface { get; set; }
-        public int TerraceSurface { get; set; }
-        public int CourtyardSurface { get; set; }
+        public int? GardenSurface { get; set; }
+        public int? TerraceSurface { get; set; }
+        public int? CourtyardSurface { get; set; }
 
         public override XElement ToXElement() {
             XElement el = new XElement("outdoorDescription",
                 new XElement("nrOfFrontages", NrOfFrontages),
                 new XElement("frontageWidth", FrontageWidth),
-                new XElement("orientationId", Orientation),
+                new XElement("orientationId", (int?) Orientation),
                 new XElement("nrOfFloors", NrOfFloors),
                 new XElement("floorNumber", FloorNumber),
                 new XElement("nrOfHousings", NrOfHousings),
@@ -50,10 +50,10 @@ namespace ImmoVlanAPI.Models {
 
     public class Ground {
 
-        public decimal TotalBuiltSurface { get; set; }
-        public decimal Surface { get; set; }
-        public decimal Depth { get; set; }
-        public decimal FrontWidth { get; set; }
+        public decimal? TotalBuiltSurface { get; set; }
+        public decimal? Surface { get; set; }
+        public decimal? Depth { get; set; }
+        public decimal? FrontWidth { get; set; }
 
     }
 

@@ -7,7 +7,7 @@ namespace ImmoVlanAPI.Models {
         public Address Address { get; set; }
         public Coordinates Coordinates { get; set; }
         public bool IsAddressDisplayed { get; set; }
-        public Environment Environment { get; set; }
+        public Environment? Environment { get; set; }
 
         public Location(Address address, Coordinates coordinates = null) {
             Address = address;
@@ -31,7 +31,7 @@ namespace ImmoVlanAPI.Models {
                     new XElement("country", Address.Country)
                 ),
                 new XElement("isAddressDisplayed", IsAddressDisplayed),
-                new XElement("environmentId", Environment)
+                new XElement("environmentId", (int?) Environment)
             );
 
             if (Coordinates != null) {

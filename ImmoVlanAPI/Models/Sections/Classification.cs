@@ -20,7 +20,7 @@ namespace ImmoVlanAPI.Models {
         public override XElement ToXElement() {
             return new XElement("classification",
                 new XElement("transactionType", TransactionType.ToString()),
-                new XElement("propertyTypeId", PropertyType),
+                new XElement("propertyTypeId", (int) PropertyType),
                 new XElement("isNewConstruction", IsNewConstruction)
             );
         }

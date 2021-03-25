@@ -41,15 +41,14 @@ namespace ImmoVlanAPI.Models {
                 new XAttribute("commercialStatus", CommercialStatus.ToString()),
                     Classification.ToXElement(),
                     Location.ToXElement(),
+                    GeneralInformation != null ? GeneralInformation.ToXElement() : null,
                     Description.ToXElement(),
-                    FinancialDetails.ToXElement()
+                    FinancialDetails.ToXElement(),
+                    OutdoorDescription != null ? OutdoorDescription.ToXElement() : null,
+                    IndoorDescription != null ? IndoorDescription.ToXElement() : null,
+                    Certificates != null ? Certificates.ToXElement() : null,
+                    Attachments != null ? Attachments.ToXElement() : null
             );
-
-            if (GeneralInformation != null) el.Add(GeneralInformation.ToXElement());
-            if (OutdoorDescription != null) el.Add(OutdoorDescription.ToXElement());
-            if (IndoorDescription != null) el.Add(IndoorDescription.ToXElement());
-            if (Certificates != null) el.Add(Certificates.ToXElement());
-            if (Attachments != null) el.Add(Attachments.ToXElement());
 
             return el;
         }

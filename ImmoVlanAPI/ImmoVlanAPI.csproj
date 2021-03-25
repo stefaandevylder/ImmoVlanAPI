@@ -8,7 +8,7 @@
     <RepositoryUrl>https://github.com/stefaandevylder/ImmoVlanAPI</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>ImmoVlanAPI is a library that acts as a wrapper to send post requests to ImmoVlan.</Description>
-    <Version>1.0.6</Version>
+    <Version>1.0.7</Version>
     <Copyright>https://licenses.nuget.org/MIT</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>Icon.png</PackageIcon>
@@ -32,6 +32,10 @@
 
   <ItemGroup>
     <Folder Include="Assets\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RestSharp" Version="106.11.7" />
   </ItemGroup>
 
 </Project>

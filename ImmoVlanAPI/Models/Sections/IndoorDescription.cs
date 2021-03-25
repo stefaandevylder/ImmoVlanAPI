@@ -4,16 +4,16 @@ namespace ImmoVlanAPI.Models {
 
     public class IndoorDescription : Section {
 
-        public decimal LivableSurface { get; set; }
-        public bool IsFurnished { get; set; }
-        public decimal UnderCeilingHeight { get; set; }
-        public bool IsOpportunityForPro { get; set; }
-        public FloorCoveringType FloorCoveringType { get; set; }
-        public GlazingType GlazingType { get; set; }
-        public bool HasDisabledAccess { get; set; }
-        public bool HasElevator { get; set; }
+        public decimal? LivableSurface { get; set; }
+        public bool? IsFurnished { get; set; }
+        public decimal? UnderCeilingHeight { get; set; }
+        public bool? IsOpportunityForPro { get; set; }
+        public FloorCoveringType? FloorCoveringType { get; set; }
+        public GlazingType? GlazingType { get; set; }
+        public bool? HasDisabledAccess { get; set; }
+        public bool? HasElevator { get; set; }
         public string WindowFramingType { get; set; }
-        public BlindsType BlindsType { get; set; }
+        public BlindsType? BlindsType { get; set; }
         public Room[] Rooms { get; set; }
         public Connections Connections { get; set; }
 
@@ -23,12 +23,12 @@ namespace ImmoVlanAPI.Models {
                 new XElement("isFurnished", IsFurnished),
                 new XElement("underCeilingHeight", UnderCeilingHeight),
                 new XElement("isOpportunityForPro", IsOpportunityForPro),
-                new XElement("floorCoveringTypeId", FloorCoveringType),
-                new XElement("glazingTypeId", GlazingType),
+                new XElement("floorCoveringTypeId", (int?) FloorCoveringType),
+                new XElement("glazingTypeId", (int?) GlazingType),
                 new XElement("hasDisabledAccess", HasDisabledAccess),
                 new XElement("hasElevator", HasElevator),
                 new XElement("windowFramingType", WindowFramingType),
-                new XElement("blindsTypeId", BlindsType)
+                new XElement("blindsTypeId", (int?) BlindsType)
             );
 
             if (Rooms != null && Rooms.Length > 0) {
@@ -84,16 +84,16 @@ namespace ImmoVlanAPI.Models {
 
     public class Connections {
 
-        public bool HasSatelliteTv { get; set; }
-        public bool HasCableTv { get; set; }
-        public bool HasTelephone { get; set; }
-        public bool HasWifi { get; set; }
-        public bool HasWaterSupply { get; set; }
-        public bool HasIndividualWaterSupply { get; set; }
-        public bool HasGasSupply { get; set; }
-        public bool HasIndividualGasSupply { get; set; }
-        public bool HasElectricitySupply { get; set; }
-        public bool HasIndividualElectricitySupply { get; set; }
+        public bool? HasSatelliteTv { get; set; }
+        public bool? HasCableTv { get; set; }
+        public bool? HasTelephone { get; set; }
+        public bool? HasWifi { get; set; }
+        public bool? HasWaterSupply { get; set; }
+        public bool? HasIndividualWaterSupply { get; set; }
+        public bool? HasGasSupply { get; set; }
+        public bool? HasIndividualGasSupply { get; set; }
+        public bool? HasElectricitySupply { get; set; }
+        public bool? HasIndividualElectricitySupply { get; set; }
 
     }
 
