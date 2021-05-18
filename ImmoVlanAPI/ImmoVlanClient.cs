@@ -16,7 +16,7 @@ namespace ImmoVlanAPI {
             get {
                 return Staging ?
                     "http://api.staging.immo.vlan.be" :
-                    "http://api.immo.vlan.be";
+                    "https://api.immo.vlan.be";
             }
         }
 
@@ -133,7 +133,7 @@ namespace ImmoVlanAPI {
             SHA1CryptoServiceProvider cryptoTransformSha1 = new SHA1CryptoServiceProvider();
             string hash = BitConverter.ToString(cryptoTransformSha1.ComputeHash(buffer)).Replace("-", "");
 
-            return hash;
+            return hash.ToLower();
         }
     }
 }
