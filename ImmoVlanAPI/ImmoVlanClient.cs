@@ -63,7 +63,7 @@ namespace ImmoVlanAPI {
         /// <param name="propertySoftwareId">The property software id</param>
         /// <returns>The HTTP response of our POST request</returns>
         public async Task<IRestResponse> SuspendProperty(string propertySoftwareId) {
-            return await PostXML(GetXML(new Property(propertySoftwareId)));
+            return await PostXML(GetXML(new Property(propertySoftwareId), ImmoVlanAction.Suspend));
         }
 
         /// <summary>
