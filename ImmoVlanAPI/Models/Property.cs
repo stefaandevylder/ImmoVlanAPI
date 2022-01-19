@@ -5,8 +5,8 @@ namespace ImmoVlanAPI.Models {
     public class Property : Section {
 
         //Identification
-        private string PropertyProId { get; set; }
-        private string PropertySoftwareId { get; set; }
+        public string PropertyProId { get; private set; }
+        public string PropertySoftwareId { get; private set; }
 
         //Reqiured Private Items & Sections
         private CommercialStatus CommercialStatus { get; set; }
@@ -21,6 +21,10 @@ namespace ImmoVlanAPI.Models {
         public IndoorDescription IndoorDescription { get; set; }
         public Certificates Certificates { get; set; }
         public Attachments Attachments { get; set; }
+
+        internal Property(string propertySoftwareId) {
+            PropertySoftwareId = propertySoftwareId;
+        }
 
         public Property(string propertyProId, string propertySoftwareId, CommercialStatus status,
             Classification classification, Location location, Description description, FinancialDetails financial) {

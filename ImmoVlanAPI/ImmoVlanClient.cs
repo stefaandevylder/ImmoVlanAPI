@@ -58,22 +58,36 @@ namespace ImmoVlanAPI {
         }
 
         /// <summary>
+        /// Suspend a property
+        /// </summary>
+        /// <param name="propertySoftwareId">The property software id</param>
+        /// <returns>The HTTP response of our POST request</returns>
+        public async Task<IRestResponse> SuspendProperty(string propertySoftwareId) {
+            return await PostXML(GetXML(new Property(propertySoftwareId)));
+        }
+
+        /// <summary>
         /// Creates the full XML file to upload to the API.
         /// </summary>
         /// <param name="property">The property object</param>
         /// <returns>A complete XML file</returns>
-        public XDocument GetXML(Property property) {
+        public XDocument GetXML(Property property, ImmoVlanAction action = ImmoVlanAction.Publish) {
             XDocument xml = ToBaseXML();
 
-            xml.Element("request").Element("action").Add(new XElement("publish", property.ToXElement()));
-            xml.Descendants().Where(a => a.IsEmpty || String.IsNullOrWhiteSpace(a.Value)).Remove();
+            if (action == ImmoVlanAction.Publish) {
+                xml.Element("request").Element("action").Add(new XElement(action.ToString().ToLower(), property.ToXElement()));
+                xml.Descendants().Where(a => a.IsEmpty || String.IsNullOrWhiteSpace(a.Value)).Remove();
+            } else {
+                xml.Element("request").Element("action").Add(new XElement(action.ToString().ToLower(), 
+                    new XElement("property", new XAttribute("propertySoftwareId", property.PropertySoftwareId))));
+            }
 
             return xml;
         }
 
         /// <summary>
         /// Creates an XML document especially designed
-        /// for the ImmoVlan API.Information in this XML
+        /// for the ImmoVlan API. Information in this XML
         /// only contains the required options.
         /// The required items can be found on: http://api.immo.vlan.be/Files/XmlTransferXsd
         /// </summary>
