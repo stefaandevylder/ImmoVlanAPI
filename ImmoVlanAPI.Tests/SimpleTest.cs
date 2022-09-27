@@ -70,6 +70,7 @@ namespace ImmoVlanAPI.Tests {
             Assert.NotNull(_advancedProperty.ToXElement());
         }
 
+        /*
         [Fact]
         public async void SendSimplePropertyToAPI() {
             var result = await _api.PublishProperty(_simpleProperty);
@@ -77,7 +78,7 @@ namespace ImmoVlanAPI.Tests {
             _output.WriteLine(result.Content);
 
             Assert.True(result.IsSuccessful);
-        }
+        }*/
 
         /*
         [Fact]

@@ -53,7 +53,7 @@ namespace ImmoVlanAPI {
         /// </summary>
         /// <param name="property">The property object</param>
         /// <returns>The HTTP response of our POST request</returns>
-        public async Task<IRestResponse> PublishProperty(Property property) {
+        public async Task<RestResponse> PublishProperty(Property property) {
             return await PostXML(GetXML(property));
         }
 
@@ -62,7 +62,7 @@ namespace ImmoVlanAPI {
         /// </summary>
         /// <param name="propertySoftwareId">The property software id</param>
         /// <returns>The HTTP response of our POST request</returns>
-        public async Task<IRestResponse> SuspendProperty(string propertySoftwareId) {
+        public async Task<RestResponse> SuspendProperty(string propertySoftwareId) {
             return await PostXML(GetXML(new Property(propertySoftwareId), ImmoVlanAction.Suspend));
         }
 
@@ -114,11 +114,10 @@ namespace ImmoVlanAPI {
         /// </summary>
         /// <param name="doc">The fial XML document</param>
         /// <returns>The HTTP response of our POST request</returns>
-        private async Task<IRestResponse> PostXML(XDocument doc) {
-            var client = new RestClient();
-            client.BaseUrl = new Uri(URL);
+        private async Task<RestResponse> PostXML(XDocument doc) {
+            var client = new RestClient(URL);
 
-            var request = new RestRequest("upload", Method.POST);
+            var request = new RestRequest("upload", Method.Post);
             request.AlwaysMultipartFormData = true;
 
             request.AddParameter("businessFeedbackEmail", BusinessFeedbackEmail, ParameterType.UrlSegment);
