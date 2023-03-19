@@ -1,4 +1,4 @@
-![alt text](https://github.com/Viincenttt/MollieApi/workflows/Run%20automated%20tests/badge.svg "Automated Tests")
+[![.NET](https://github.com/stefaandevylder/ImmoVlanAPI/actions/workflows/dotnet.yml/badge.svg)](https://github.com/stefaandevylder/ImmoVlanAPI/actions/workflows/dotnet.yml)
 
 # ImmoVlanAPI for Dotnet Core in C#
 
