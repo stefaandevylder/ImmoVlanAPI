@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Authors>Stefaan De Vylder</Authors>
     <Company>Stefaan De Vylder</Company>
     <PackageProjectUrl>https://github.com/stefaandevylder/ImmoVlanAPI</PackageProjectUrl>
