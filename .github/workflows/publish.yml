@@ -3,27 +3,26 @@ on:
   push:
     branches:
       - master
-      
+
 jobs:
-  publish:
-    name: build, pack & publish
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-18.04
+    name: Update NuGet package
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v1
 
-      # Publish
-      - name: publish on version change
-        id: publish_nuget
-        uses: brandedoutcast/publish-nuget@v2
+      - name: Setup .NET Core @ Latest
+        uses: actions/setup-dotnet@v1
         with:
-          # Filepath of the project to be packaged, relative to root of repository
-          PROJECT_FILE_PATH: ImmoVlanAPI/ImmoVlanAPI.csproj
+          source-url: https://nuget.pkg.github.com/stefaandevylder/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.NUGET_API_KEY}}        
+          
+      - name: Build solution and generate NuGet package
+        run: |  
+          cd ImmoVlanAPI
+          dotnet pack -c Release -o out  
 
-          # Configuration to build and package
-          BUILD_CONFIGURATION: Release
-
-          # NuGet package id, used for version detection & defaults to project name
-          PACKAGE_NAME: ImmoVlanAPI
-
-          # API key to authenticate with NuGet server
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+      - name: Push generated package to GitHub registry
+        run: dotnet nuget push ./ImmoVlanAPI/out/*.nupkg --skip-duplicate --no-symbols true
