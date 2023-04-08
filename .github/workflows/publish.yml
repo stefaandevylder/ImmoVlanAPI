@@ -20,9 +20,7 @@ jobs:
           NUGET_AUTH_TOKEN: ${{secrets.NUGET_API_KEY}}        
           
       - name: Build solution and generate NuGet package
-        run: |  
-          cd ImmoVlanAPI
-          dotnet pack -c Release -o out  
+        run: dotnet pack -c Release -o out  
 
       - name: Push generated package to GitHub registry
         run: dotnet nuget push ./ImmoVlanAPI/out/*.nupkg --skip-duplicate --no-symbols true
