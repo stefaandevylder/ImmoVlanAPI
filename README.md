@@ -1,4 +1,4 @@
-[![.NET](https://github.com/stefaandevylder/ImmoVlanAPI/actions/workflows/dotnet.yml/badge.svg)](https://github.com/stefaandevylder/ImmoVlanAPI/actions/workflows/dotnet.yml)
+[![.NET](https://github.com/stefaandevylder/ImmoVlanAPI/actions/workflows/test.yml/badge.svg)](https://github.com/stefaandevylder/ImmoVlanAPI/actions/workflows/test.yml)
 
 # ImmoVlanAPI for Dotnet Core in C#
 

@@ -76,7 +76,7 @@ namespace ImmoVlanAPI {
 
             if (action == ImmoVlanAction.Publish) {
                 xml.Element("request").Element("action").Add(new XElement(action.ToString().ToLower(), property.ToXElement()));
-                xml.Descendants().Where(a => a.IsEmpty || String.IsNullOrWhiteSpace(a.Value)).Remove();
+                xml.Descendants().Where(a => a.IsEmpty || string.IsNullOrWhiteSpace(a.Value)).Remove();
             } else {
                 xml.Element("request").Element("action").Add(new XElement(action.ToString().ToLower(), 
                     new XElement("property", new XAttribute("propertySoftwareId", property.PropertySoftwareId))));
