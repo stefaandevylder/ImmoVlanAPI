@@ -30,7 +30,9 @@ jobs:
         run: dotnet test --no-build --verbosity normal
           
       - name: Pack
-        run: dotnet pack -c Release -o out  
+        run: |  
+          cd ImmoVlanAPI
+          dotnet pack -c Release -o out  
 
       - name: Push generated package to NuGet
         run: dotnet nuget push ./ImmoVlanAPI/out/*.nupkg --skip-duplicate --no-symbols true
