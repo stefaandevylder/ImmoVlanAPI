@@ -6,7 +6,6 @@
     <Company>Stefaan De Vylder</Company>
     <PackageProjectUrl>https://github.com/stefaandevylder/ImmoVlanAPI</PackageProjectUrl>
     <RepositoryUrl>https://github.com/stefaandevylder/ImmoVlanAPI</RepositoryUrl>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>ImmoVlanAPI is a library that acts as a wrapper to send post requests to ImmoVlan.</Description>
     <Version>2.1.1</Version>
     <Copyright>https://licenses.nuget.org/MIT</Copyright>
