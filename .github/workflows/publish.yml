@@ -1,13 +1,13 @@
-name: Publish to NuGet
+name: Release to NuGet
+
 on:
-  push:
-    branches:
-      - master
+  release:
+    types: [published]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Update NuGet package
+    name: Test and release NuGet package
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -20,13 +20,13 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
         
-      - name: Test
+      - name: Run tests
         run: |  
           cd ImmoVlanAPI.Tests
           dotnet build --no-restore
           dotnet test --no-build --verbosity normal
           
-      - name: Pack
+      - name: Pack project
         run: |  
           cd ImmoVlanAPI
           dotnet build --no-restore
