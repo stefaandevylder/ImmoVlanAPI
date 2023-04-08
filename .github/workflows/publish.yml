@@ -33,4 +33,4 @@ jobs:
           dotnet pack -c Release -o out  
 
       - name: Push generated package to NuGet
-        run: dotnet nuget push ./ImmoVlanAPI/out/*.nupkg --source ./ImmoVlanAPI --skip-duplicate --api-key ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push ./ImmoVlanAPI/out/*.nupkg --source https://github.com --skip-duplicate --api-key ${{ secrets.NUGET_API_KEY }}
