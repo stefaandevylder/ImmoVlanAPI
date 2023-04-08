@@ -1,6 +1,5 @@
 using ImmoVlanAPI.Models;
 using System;
-using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -34,28 +33,28 @@ namespace ImmoVlanAPI.Tests {
                     AgencyFee = 50,
                     Curreny = Curreny.CHF
                 }) {
-                    GeneralInformation = new GeneralInformation() {
-                        ContactEmail = "sdhjgfj@fjhk.com"
+                GeneralInformation = new GeneralInformation() {
+                    ContactEmail = "sdhjgfj@fjhk.com"
+                },
+                OutdoorDescription = new OutdoorDescription() {
+                    HasBalcony = true
+                },
+                IndoorDescription = new IndoorDescription() {
+                    IsFurnished = true
+                },
+                Certificates = new Certificates() {
+                    Epc = new EPC() {
+                        Reference = "JHSGHJKSQDH"
                     },
-                    OutdoorDescription = new OutdoorDescription() {
-                        HasBalcony = true
-                    },
-                    IndoorDescription = new IndoorDescription() {
-                        IsFurnished = true
-                    },
-                    Certificates = new Certificates() {
-                        Epc = new EPC() {
-                            Reference = "JHSGHJKSQDH"
-                        },
-                        ElectricalInstallationCertificate = Certificate.Yes,
-                        ElectricalInstallationValidityDate = DateTime.Now
-                    },
-                    Attachments = new Attachments() {
-                        Pictures = new Picture[] { new Picture(1, "content") },
-                        Videos = new Video[] { new Video(1, "link") },
-                        Documents = new Document[] { new Document("name", 1, "content") }
-                    }
-                };
+                    ElectricalInstallationCertificate = Certificate.Yes,
+                    ElectricalInstallationValidityDate = DateTime.Now
+                },
+                Attachments = new Attachments() {
+                    Pictures = new Picture[] { new Picture(1, "content") },
+                    Videos = new Video[] { new Video(1, "link") },
+                    Documents = new Document[] { new Document("name", 1, "content") }
+                }
+            };
         }
 
         [Fact]

@@ -12,11 +12,16 @@
     <Copyright>https://licenses.nuget.org/MIT</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>Icon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Assets\Icon.png" />
     <None Remove="Assets\Icon.png" />
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
     <None Include="Assets\Icon.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
@@ -31,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="RestSharp" Version="108.0.3" />
+    <PackageReference Include="RestSharp" Version="110.1.0" />
   </ItemGroup>
 
 </Project>
