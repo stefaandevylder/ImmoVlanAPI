@@ -15,8 +15,8 @@ namespace ImmoVlanAPI {
         private string URL {
             get {
                 return Staging ?
-                    "http://api.staging.immo.vlan.be" :
-                    "https://api.immo.vlan.be";
+                    "http://api.staging.immovlan.be" :
+                    "https://api.immovlan.be";
             }
         }
 
